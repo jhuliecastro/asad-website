@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AL SHUROOQ AL DHABI — HVAC Systems LLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#070e1a;--deep:#0b1526;--mid:#0f1e35;--card:#111f38;
+      --orange:#f07c1e;--amber:#e8920a;--slate:#7a97bb;--light:#c8daf0;--white:#f0f6ff;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--navy);color:var(--light);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:76px;background:rgba(7,14,26,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(240,124,30,0.12)}
+    .nav-logo{display:flex;align-items:center;gap:12px}
+    .nav-snowflake{font-size:28px;animation:spin 8s linear infinite}
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .nav-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--white)}
+    .nav-name span{color:var(--orange)}
+    .nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+    .nav-links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--slate);text-decoration:none;transition:color 0.3s}
+    .nav-links a:hover{color:var(--white)}
+    .nav-cta{background:var(--orange)!important;color:var(--navy)!important;padding:10px 24px!important;font-weight:600!important}
+    #hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:flex-end;overflow:hidden}
+    .hero-image{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80');background-size:cover;background-position:center;animation:zoomOut 8s ease forwards}
+    @keyframes zoomOut{from{transform:scale(1.05)}to{transform:scale(1)}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,14,26,1) 0%,rgba(7,14,26,0.65) 40%,rgba(7,14,26,0.2) 100%)}
+    .hero-overlay-side{position:absolute;inset:0;background:linear-gradient(to right,rgba(7,14,26,0.85) 0%,transparent 65%)}
+    .hero-content{position:relative;z-index:2;padding:0 56px 120px;max-width:800px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(240,124,30,0.15);border:1px solid rgba(240,124,30,0.4);padding:6px 16px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:24px;opacity:0;animation:fadeUp 0.8s 0.3s forwards}
+    .hero-title{font-family:'Playfair Display',serif;font-size:clamp(56px,8vw,110px);font-weight:900;line-height:0.95;color:var(--white);margin-bottom:24px;opacity:0;animation:fadeUp 0.8s 0.5s forwards}
+    .hero-title .accent{color:var(--orange);font-style:italic}
+    .hero-subtitle{font-size:17px;color:var(--light);max-width:500px;line-height:1.7;margin-bottom:40px;opacity:0;animation:fadeUp 0.8s 0.7s forwards}
+    .hero-actions{display:flex;gap:16px;opacity:0;animation:fadeUp 0.8s 0.9s forwards}
+    .btn-primary{background:var(--orange);color:var(--navy);padding:16px 36px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s}
+    .btn-primary:hover{background:var(--amber);transform:translateY(-3px);box-shadow:0 12px 32px rgba(240,124,30,0.3)}
+    .btn-ghost{background:transparent;color:var(--white);padding:16px 36px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(255,255,255,0.25);cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s}
+    .btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+    .hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:3;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.08);background:rgba(7,14,26,0.75);backdrop-filter:blur(12px)}
+    .hero-stat{padding:24px 32px;border-right:1px solid rgba(255,255,255,0.06);opacity:0;animation:fadeUp 0.6s forwards}
+    .hero-stat:nth-child(1){animation-delay:1.0s}.hero-stat:nth-child(2){animation-delay:1.1s}.hero-stat:nth-child(3){animation-delay:1.2s}.hero-stat:nth-child(4){animation-delay:1.3s;border-right:none}
+    .stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--orange);line-height:1}
+    .stat-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);margin-top:4px}
+    .ticker{background:var(--orange);padding:12px 0;overflow:hidden}
+    .ticker-track{display:flex;gap:64px;animation:marquee 30s linear infinite;width:max-content}
+    .ticker-item{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--navy);white-space:nowrap}
+    .section-inner{max-width:1240px;margin:0 auto;padding:110px 56px}
+    .section-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+    .section-tag::before{content:'';width:32px;height:1px;background:var(--orange)}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(38px,5vw,62px);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:20px}
+    .section-sub{font-size:16px;color:var(--slate);max-width:560px;line-height:1.7;margin-bottom:64px}
+    #about{background:var(--deep)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .about-image-stack{position:relative;height:520px}
+    .about-img-main{position:absolute;top:0;left:0;width:80%;height:420px;object-fit:cover;border:3px solid rgba(240,124,30,0.2)}
+    .about-img-accent{position:absolute;bottom:0;right:0;width:55%;height:260px;object-fit:cover;border:3px solid rgba(240,124,30,0.4);box-shadow:0 24px 60px rgba(0,0,0,0.5)}
+    .about-img-badge{position:absolute;top:40px;right:0;background:var(--orange);padding:20px 24px;text-align:center}
+    .about-img-badge strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--navy);line-height:1}
+    .about-img-badge span{font-size:11px;letter-spacing:1px;color:var(--navy);text-transform:uppercase}
+    .about-text p{color:var(--slate);font-size:15px;line-height:1.8;margin-bottom:20px}
+    .about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+    .value-pill{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(240,124,30,0.07);border:1px solid rgba(240,124,30,0.2);font-size:13px;font-weight:500;color:var(--light);transition:all 0.3s}
+    .value-pill:hover{background:rgba(240,124,30,0.15);border-color:var(--orange)}
+    #services{background:var(--navy)}
+    .services-layout{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start}
+    .services-image img{width:100%;height:400px;object-fit:cover}
+    .services-image-caption{background:var(--card);padding:20px 24px;border-left:3px solid var(--orange)}
+    .services-image-caption strong{display:block;font-size:15px;color:var(--white);margin-bottom:4px}
+    .services-image-caption p{font-size:13px;color:var(--slate)}
+    .services-list{display:flex;flex-direction:column;gap:2px}
+    .service-item{background:var(--card);border:1px solid rgba(255,255,255,0.05);padding:28px 32px;display:flex;gap:24px;align-items:flex-start;transition:all 0.3s;position:relative;overflow:hidden}
+    .service-item::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--orange);transform:scaleY(0);transition:transform 0.3s}
+    .service-item:hover{background:rgba(240,124,30,0.06);transform:translateX(6px)}
+    .service-item:hover::after{transform:scaleY(1)}
+    .service-icon{width:48px;height:48px;background:rgba(240,124,30,0.1);border:1px solid rgba(240,124,30,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .service-item h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--white);margin-bottom:6px}
+    .service-item p{font-size:14px;color:var(--slate);line-height:1.6}
+    #projects{background:var(--deep)}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 280px;gap:4px;margin-bottom:48px}
+    .gallery-item{position:relative;overflow:hidden;cursor:pointer}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;filter:brightness(0.75)}
+    .gallery-item:hover img{transform:scale(1.08);filter:brightness(0.95)}
+    .gallery-item:nth-child(1){grid-column:span 2}
+    .gallery-item:nth-child(5){grid-column:span 2}
+    .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,14,26,0.9) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;opacity:0;transition:opacity 0.3s}
+    .gallery-item:hover .gallery-overlay{opacity:1}
+    .gallery-overlay span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+    .gallery-overlay p{font-size:14px;font-weight:500;color:var(--white)}
+    .projects-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+    .project-card{background:var(--card);border:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:all 0.3s}
+    .project-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,0.4)}
+    .project-card-img{width:100%;height:200px;object-fit:cover;filter:brightness(0.8);transition:all 0.4s;display:block}
+    .project-card:hover .project-card-img{filter:brightness(1)}
+    .project-card-body{padding:24px}
+    .project-type{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+    .project-card-body h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--white);margin-bottom:8px}
+    .project-card-body p{font-size:13px;color:var(--slate);line-height:1.6}
+    .project-tag{display:inline-block;margin-top:12px;background:rgba(240,124,30,0.1);border:1px solid rgba(240,124,30,0.3);padding:3px 10px;font-size:10px;letter-spacing:1px;color:var(--orange);text-transform:uppercase}
+    #brands{background:var(--mid);padding:80px 0;overflow:hidden}
+    .brands-header{text-align:center;margin-bottom:56px;padding:0 56px}
+    .brands-marquee{overflow:hidden;margin-bottom:4px}
+    .brands-track{display:flex;gap:4px;animation:marquee 24s linear infinite;width:max-content}
+    .brands-track.reverse{animation-direction:reverse}
+    .brand-chip{background:var(--card);border:1px solid rgba(255,255,255,0.06);padding:16px 32px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--slate);white-space:nowrap;transition:all 0.3s}
+    .brand-chip:hover{border-color:var(--orange);color:var(--orange)}
+    #cta{position:relative;height:480px;display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center}
+    .cta-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=80');background-size:cover;background-position:center;background-attachment:fixed}
+    .cta-overlay{position:absolute;inset:0;background:rgba(7,14,26,0.82)}
+    .cta-content{position:relative;z-index:2;padding:0 56px}
+    .cta-content h2{font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);color:var(--white);margin-bottom:20px;line-height:1.1}
+    .cta-content h2 em{font-style:italic;color:var(--orange)}
+    .cta-content p{font-size:16px;color:var(--slate);margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+    #contact{background:var(--navy)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+    .contact-left h3{font-family:'Playfair Display',serif;font-size:32px;color:var(--white);margin-bottom:32px}
+    .contact-item{display:flex;gap:16px;margin-bottom:28px}
+    .contact-icon{width:44px;height:44px;background:rgba(240,124,30,0.1);border:1px solid rgba(240,124,30,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .contact-item-body span{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+    .contact-item-body p{font-size:14px;color:var(--slate);line-height:1.6}
+    .contact-map{margin-top:32px;background:var(--card);border:1px solid rgba(255,255,255,0.06);height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .contact-map img{width:100%;height:100%;object-fit:cover;opacity:0.4}
+    .contact-map-label{position:absolute;font-size:13px;letter-spacing:1px;color:var(--orange);background:rgba(7,14,26,0.85);padding:8px 16px;border:1px solid rgba(240,124,30,0.3)}
+    .contact-form{background:var(--card);border:1px solid rgba(255,255,255,0.06);padding:48px}
+    .contact-form h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--white);margin-bottom:32px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .form-group label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--slate)}
+    .form-group input,.form-group textarea,.form-group select{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-bottom:2px solid rgba(255,255,255,0.15);padding:14px 16px;color:var(--white);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;resize:none;transition:all 0.3s}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-bottom-color:var(--orange);background:rgba(240,124,30,0.04)}
+    .form-group select option{background:var(--navy)}
+    .form-submit{width:100%;background:var(--orange);color:var(--navy);padding:16px;border:none;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;margin-top:8px}
+    .form-submit:hover{background:var(--amber)}
+    .form-note{font-size:12px;margin-top:12px;min-height:20px}
+    footer{background:#040a14;border-top:1px solid rgba(240,124,30,0.12)}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 56px 48px;max-width:1240px;margin:0 auto}
+    .footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:var(--white);margin-bottom:8px}
+    .footer-brand-name span{color:var(--orange)}
+    .footer-tagline{font-size:12px;color:var(--slate);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+    .footer-desc{font-size:13px;color:var(--slate);line-height:1.7;max-width:280px}
+    .footer-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:10px}
+    .footer-col ul li a{font-size:13px;color:var(--slate);text-decoration:none;transition:color 0.3s}
+    .footer-col ul li a:hover{color:var(--white)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.05);padding:24px 56px;display:flex;justify-content:space-between;align-items:center;max-width:1240px;margin:0 auto;font-size:12px;color:rgba(122,151,187,0.5)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}
+    @media(max-width:960px){nav{padding:0 24px}.nav-links{display:none}.section-inner{padding:72px 24px}.hero-content{padding:0 24px 160px}.hero-stats{grid-template-columns:repeat(2,1fr)}.about-grid,.contact-grid,.services-layout{grid-template-columns:1fr}.about-image-stack{height:300px}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.gallery-item{height:200px!important}.gallery-item:nth-child(1),.gallery-item:nth-child(5){grid-column:span 1}.projects-cards{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:12px;text-align:center}.form-row{grid-template-columns:1fr}.contact-form{padding:32px 24px}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-snowflake">❄️</div>
+    <div class="nav-name">AL SHUROOQ <span>AL DHABI</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-image"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay-side"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Established 2015 · Dubai, UAE · License No. 747669</div>
+    <h1 class="hero-title">We<br><span class="accent">Comfort</span><br>Your Zone</h1>
+    <p class="hero-subtitle">Al Shurooq Al Dhabi delivers world-class HVAC systems across all seven UAE emirates — from government complexes to luxury villas and high-rise towers.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Quote</a>
+      <a href="#projects" class="btn-ghost">View Our Work</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="stat-num">10+</div><div class="stat-lbl">Years Experience</div></div>
+    <div class="hero-stat"><div class="stat-num">7</div><div class="stat-lbl">Emirates Served</div></div>
+    <div class="hero-stat"><div class="stat-num">50+</div><div class="stat-lbl">Major Projects</div></div>
+    <div class="hero-stat"><div class="stat-num">12</div><div class="stat-lbl">Global Brands</div></div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">WE COMFORT YOUR ZONE</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">HVAC INSTALLATION &amp; MAINTENANCE</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">GOVERNMENT &amp; COMMERCIAL PROJECTS</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">EXPO 2020 DUBAI — CHINA PAVILION</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">VRF SYSTEMS · CHILLERS · AHU · FCU</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">WE COMFORT YOUR ZONE</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">HVAC INSTALLATION &amp; MAINTENANCE</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">GOVERNMENT &amp; COMMERCIAL PROJECTS</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">EXPO 2020 DUBAI — CHINA PAVILION</span><span class="ticker-item">✦</span>
+    <span class="ticker-item">VRF SYSTEMS · CHILLERS · AHU · FCU</span><span class="ticker-item">✦</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image-stack reveal">
+        <img class="about-img-main" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80" alt="HVAC technician">
+        <img class="about-img-accent" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="AC units">
+        <div class="about-img-badge"><strong>10+</strong><span>Years of<br>Excellence</span></div>
+      </div>
+      <div class="about-text reveal reveal-delay-2">
+        <div class="section-tag">Who We Are</div>
+        <h2 class="section-title">Built on Trust,<br>Driven by Quality</h2>
+        <p>Al Shurooq Al Dhabi HVAC Systems LLC is one of the Gulf's leading HVAC specialists — manufacturing, supplying, and installing premium air conditioning systems since 2015 from our headquarters in Deira, Dubai.</p>
+        <p>Our mission is simple: <em>Only Customer Satisfaction</em> — through quality equipment, professional installation, and genuine after-sales care. We've delivered solutions for government agencies, commercial towers, hotels, and luxury villas across all seven emirates.</p>
+        <div class="about-values">
+          <div class="value-pill"><span>🔬</span> Innovation</div>
+          <div class="value-pill"><span>🎯</span> Professionalism</div>
+          <div class="value-pill"><span>🤝</span> Reliability</div>
+          <div class="value-pill"><span>📞</span> After-Sales Care</div>
+        </div>
+        <br><br>
+        <a href="#contact" class="btn-primary">Start a Project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-inner">
+    <div class="services-layout">
+      <div class="services-image reveal">
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80" alt="HVAC installation">
+        <div class="services-image-caption">
+          <strong>End-to-End HVAC Solutions</strong>
+          <p>From design and supply to installation, commissioning, and long-term maintenance.</p>
+        </div>
+        <br>
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" alt="Construction" style="width:100%;height:220px;object-fit:cover;margin-top:4px;">
+      </div>
+      <div>
+        <div class="section-tag reveal">What We Do</div>
+        <h2 class="section-title reveal">Complete HVAC<br>Solutions</h2>
+        <p class="section-sub reveal">Every service, every system — we cover the full lifecycle of your climate control needs.</p>
+        <div class="services-list">
+          <div class="service-item reveal"><div class="service-icon">❄️</div><div><h3>AC Installation &amp; Supply</h3><p>Full supply and installation of ducted splits, packaged units, chillers, fan coil units, air handling units, and VRF systems.</p></div></div>
+          <div class="service-item reveal reveal-delay-1"><div class="service-icon">🌀</div><div><h3>Ductwork &amp; Air Balancing</h3><p>Professional duct fabrication, chilled water systems, air balancing, and VCD/VAV equipment maintenance.</p></div></div>
+          <div class="service-item reveal reveal-delay-2"><div class="service-icon">🔧</div><div><h3>Preventive Maintenance</h3><p>Scheduled AC maintenance programs — FCU, AHU, humidifier and dehumidifier servicing — all year round.</p></div></div>
+          <div class="service-item reveal reveal-delay-3"><div class="service-icon">⚙️</div><div><h3>Spare Parts Supply</h3><p>Genuine parts: compressors, motors, copper coils, condensers, expansion valves, control boards, and blowers.</p></div></div>
+          <div class="service-item reveal"><div class="service-icon">📡</div><div><h3>VRF Systems</h3><p>Design, supply, and installation of Variable Refrigerant Flow systems — the most energy-efficient solution for large buildings.</p></div></div>
+          <div class="service-item reveal reveal-delay-1"><div class="service-icon">🏗️</div><div><h3>Turnkey Projects</h3><p>Full project execution from engineering design through commissioning, handover, and annual maintenance contracts.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-tag reveal">Our Portfolio</div>
+    <h2 class="section-title reveal">Projects That<br>Define Us</h2>
+    <p class="section-sub reveal">From Expo 2020 to Sheikh palaces — our portfolio spans government institutions, high-rise towers, mosques, hotels, and luxury residences.</p>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" alt="Dubai skyline"><div class="gallery-overlay"><span>Commercial</span><p>Dubai High-Rise Projects</p></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="Construction"><div class="gallery-overlay"><span>Residential</span><p>Villa Projects, Sharjah</p></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80" alt="HVAC work"><div class="gallery-overlay"><span>Installation</span><p>Ductwork &amp; AHU Systems</p></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="AC units"><div class="gallery-overlay"><span>Government</span><p>Taw-Jeeh Career Centers</p></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&q=80" alt="Maintenance"><div class="gallery-overlay"><span>Maintenance</span><p>Preventive Service Programs</p></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&q=80" alt="Building"><div class="gallery-overlay"><span>Hotel</span><p>Paramissa Apartments G+20</p></div></div>
+    </div>
+    <div class="projects-cards">
+      <div class="project-card reveal">
+        <img class="project-card-img" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80" alt="Expo 2020">
+        <div class="project-card-body"><div class="project-type">Landmark · Commercial</div><h3>Expo 2020 — China Pavilion</h3><p>HVAC installation for the China Pavilion at Expo 2020 Dubai, with Sino Contracting LLC.</p><span class="project-tag">Dubai</span><span class="project-tag" style="margin-left:6px;">Completed</span></div>
+      </div>
+      <div class="project-card reveal reveal-delay-1">
+        <img class="project-card-img" src="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=600&q=80" alt="Government">
+        <div class="project-card-body"><div class="project-type">Government</div><h3>Taw-Jeeh Career Centers</h3><p>Multi-location installations across Musaffah, Abu Dhabi, Dubai, Sharjah, and Ajman.</p><span class="project-tag">Multi-Emirate</span></div>
+      </div>
+      <div class="project-card reveal reveal-delay-2">
+        <img class="project-card-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="High-rise">
+        <div class="project-card-body"><div class="project-type">Residential · High-Rise</div><h3>Paramissa Hotel Apartments G+20</h3><p>Full HVAC solution for a 20-floor hotel apartment tower with Dubai Properties.</p><span class="project-tag">Dubai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="brands">
+  <div class="brands-header reveal">
+    <div class="section-tag" style="justify-content:center;">Our Partners</div>
+    <h2 class="section-title">Authorized Brands</h2>
+    <p class="section-sub" style="margin:0 auto;">We supply only internationally recognized HVAC manufacturers, ensuring quality and after-sales support on every product.</p>
+  </div>
+  <div class="brands-marquee"><div class="brands-track"><div class="brand-chip">CARRIER</div><div class="brand-chip">MITSUBISHI ELECTRIC</div><div class="brand-chip">LG</div><div class="brand-chip">O·GENERAL</div><div class="brand-chip">SUPER GENERAL</div><div class="brand-chip">RHEEM</div><div class="brand-chip">YORK</div><div class="brand-chip">MIDEA</div><div class="brand-chip">DAIKIN</div><div class="brand-chip">TRANE</div><div class="brand-chip">GEONAIR</div><div class="brand-chip">SKM</div><div class="brand-chip">CARRIER</div><div class="brand-chip">MITSUBISHI ELECTRIC</div><div class="brand-chip">LG</div><div class="brand-chip">O·GENERAL</div><div class="brand-chip">SUPER GENERAL</div><div class="brand-chip">RHEEM</div><div class="brand-chip">YORK</div><div class="brand-chip">MIDEA</div><div class="brand-chip">DAIKIN</div><div class="brand-chip">TRANE</div><div class="brand-chip">GEONAIR</div><div class="brand-chip">SKM</div></div></div>
+  <div style="height:4px;"></div>
+  <div class="brands-marquee"><div class="brands-track reverse"><div class="brand-chip">TOSHIBA</div><div class="brand-chip">SAMSUNG</div><div class="brand-chip">FUJITSU</div><div class="brand-chip">PANASONIC</div><div class="brand-chip">HITACHI</div><div class="brand-chip">COOPER &amp; HUNTER</div><div class="brand-chip">TOSHIBA</div><div class="brand-chip">SAMSUNG</div><div class="brand-chip">FUJITSU</div><div class="brand-chip">PANASONIC</div><div class="brand-chip">HITACHI</div><div class="brand-chip">COOPER &amp; HUNTER</div></div></div>
+  <div style="height:80px;"></div>
+</section>
+
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content reveal">
+    <h2>Ready to Start<br>Your <em>Next Project?</em></h2>
+    <p>Whether it's a single villa or a 25-floor tower, our team is ready with a detailed quote and technical consultation.</p>
+    <a href="#contact" class="btn-primary">Get a Free Quote Today</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="section-tag">Reach Us</div>
+        <h3>Let's Talk About<br>Your Project</h3>
+        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-item-body"><span>Head Office</span><p>Al-Marar Building, Office No. 101<br>Deira, Dubai, UAE</p></div></div>
+        <div class="contact-item"><div class="contact-icon">🏪</div><div class="contact-item-body"><span>Ajman Branch</span><p>Showroom &amp; Spare Parts Shop<br>Rumaila, Ajman</p></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-item-body"><span>Phone</span><p>+971 4 272 9792 · +971 6 520 5968<br>+971 55 907 1542 · +971 56 577 2733</p></div></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-item-body"><span>Email</span><p>alshurooqac@gmail.com<br>info@alshurooqac.com</p></div></div>
+        <div class="contact-item"><div class="contact-icon">🌐</div><div class="contact-item-body"><span>Website</span><p>www.asadaircon.com</p></div></div>
+        <div class="contact-map"><img src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?w=600&q=80" alt="Dubai map"><div class="contact-map-label">📍 Deira, Dubai</div></div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <h3>Send an Inquiry</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="f-name" placeholder="Your name"></div>
+          <div class="form-group"><label>Phone *</label><input type="tel" id="f-phone" placeholder="+971 …"></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="your@email.com"></div>
+        <div class="form-group"><label>Service Required</label><select id="f-service"><option value="">Select a service…</option><option>New AC Installation</option><option>Preventive Maintenance</option><option>Ductwork / Air Balancing</option><option>VRF System</option><option>Chilled Water System</option><option>Spare Parts</option><option>Turnkey Project</option><option>General Inquiry</option></select></div>
+        <div class="form-group"><label>Project Details</label><textarea id="f-message" rows="5" placeholder="Tell us about your project — location, size, timeline, specific requirements…"></textarea></div>
+        <button class="form-submit" onclick="handleSubmit(event)">Send Inquiry →</button>
+        <p class="form-note" id="form-msg"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">AL SHUROOQ <span>AL DHABI</span></div>
+      <div class="footer-tagline">We Comfort Your Zone</div>
+      <p class="footer-desc">Leading HVAC systems manufacturer and installer across the UAE since 2015. Serving residential, commercial, and government clients with international quality.</p>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#services">AC Installation</a></li><li><a href="#services">Ductwork</a></li><li><a href="#services">VRF Systems</a></li><li><a href="#services">Maintenance</a></li><li><a href="#services">Spare Parts</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#projects">Projects</a></li><li><a href="#brands">Our Brands</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">License No. 747669</a></li><li><a href="#">TRN 100278992100003</a></li><li><a href="#">VAT Registered</a></li><li><a href="#">Dubai, UAE</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Al Shurooq Al Dhabi HVAC Systems LLC. All rights reserved.</span>
+    <span>Deira, Dubai · Ajman · UAE</span>
+  </div>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Nav scroll effect ──
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 50 ? 'rgba(7,14,26,0.98)' : 'rgba(7,14,26,0.9)';
+  });
+
+  // ── Contact form submission ──
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const msg     = document.getElementById('form-msg');
+    const name    = document.getElementById('f-name').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    // Basic validation
+    if (!name || !phone || !email) {
+      msg.style.color = '#e74c3c';
+      msg.textContent = 'Please fill in your name, phone, and email.';
+      return;
+    }
+
+    msg.style.color = 'var(--slate)';
+    msg.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('/submit-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, email, service, message })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        msg.style.color = '#f07c1e';
+        msg.textContent = 'Thank you ' + name + '! We will contact you within 24 hours.';
+      } else {
+        msg.style.color = '#e74c3c';
+        msg.textContent = result.error || 'Something went wrong. Please try again.';
+      }
+
+    } catch (err) {
+      msg.style.color = '#e74c3c';
+      msg.textContent = 'Could not reach server. Please call us directly.';
+    }
+  }
+</script>
+
+</body>
+</html>
