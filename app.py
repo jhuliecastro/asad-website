@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, session, redirect, url_for
 import sqlite3
 import os
+import time
 
 app = Flask(__name__, static_folder='.')
 app.secret_key = 'asad-hvac-secret-2026-change-this'
@@ -16,6 +17,31 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def delete_old_files():
+    if not os.path.exists(UPLOAD_FOLDER):
+        return
+    now = time.time()
+    days_30 = 30 * 24 * 60 * 60
+    deleted_count = 0
+    for filename in os.listdir(UPLOAD_FOLDER):
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file_age = now - os.path.getmtime(filepath)
+        if file_age > days_30:
+            os.remove(filepath)
+            conn = get_db()
+            cursor = conn.cursor()
+            cursor.execute(
+                'UPDATE inquiries SET attachment_file = NULL WHERE attachment_file = ?',
+                (filename,)
+            )
+            conn.commit()
+            conn.close()
+            deleted_count += 1
+            print(f"Auto-deleted old file: {filename}")
+    if deleted_count > 0:
+        print(f"Auto-delete complete: {deleted_count} file(s) removed")
+
+
 def get_db():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
@@ -26,7 +52,6 @@ def init_db():
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
-    # Run auto-delete on startup
     delete_old_files()
 
     conn = get_db()
@@ -86,27 +111,28 @@ def submit_inquiry():
     print(f"New inquiry from: {name} | {email} | {phone}")
 
     if not name or not phone or not email:
-        return jsonify({'success': False, 'error': 'Name, phone and email are required.'}), 400
+        return jsonify({
+            'success': False,
+            'error': 'Name, phone and email are required.'
+        }), 400
 
     if 'attachment_file' in request.files:
-    file = request.files['attachment_file']
-    if file and file.filename != '' and allowed_file(file.filename):
+        file = request.files['attachment_file']
+        if file and file.filename != '' and allowed_file(file.filename):
+            file.seek(0, 2)
+            file_size = file.tell()
+            file.seek(0)
 
-        # Check file size before saving
-        file.seek(0, 2)  # Seek to end of file
-        file_size = file.tell()  # Get file size in bytes
-        file.seek(0)  # Reset back to beginning
+            if file_size > MAX_FILE_SIZE_BYTES:
+                return jsonify({
+                    'success': False,
+                    'error': f'File too large. Maximum size is {MAX_FILE_SIZE_MB}MB. Please use the link field instead.'
+                }), 400
 
-        if file_size > MAX_FILE_SIZE_BYTES:
-            return jsonify({
-                'success': False,
-                'error': f'File too large. Maximum size is {MAX_FILE_SIZE_MB}MB. Please use the link field instead.'
-            }), 400
-
-        safe_filename = f"{name.replace(' ', '_')}_{file.filename.replace(' ', '_')}"
-        file.save(os.path.join(UPLOAD_FOLDER, safe_filename))
-        attachment_file = safe_filename
-        print(f"File saved: {safe_filename}")
+            safe_filename = f"{name.replace(' ', '_')}_{file.filename.replace(' ', '_')}"
+            file.save(os.path.join(UPLOAD_FOLDER, safe_filename))
+            attachment_file = safe_filename
+            print(f"File saved: {safe_filename}")
 
     conn = get_db()
     cursor = conn.cursor()
@@ -234,7 +260,6 @@ def view_inquiries():
     else:
         for row in rows:
             badge = 'badge-new' if row['status'] == 'new' else 'badge-resolved'
-
             attachment_html = ''
             if row['attachment_file']:
                 attachment_html += f'<a href="/uploads/{row["attachment_file"]}" class="file-link" target="_blank">📎 {row["attachment_file"]}</a><br>'
@@ -281,58 +306,13 @@ def public_export():
     rows = cursor.fetchall()
     conn.close()
     return jsonify([dict(row) for row in rows])
-def delete_old_files():
-    """
-    Deletes uploaded files older than 30 days.
-    
-    HOW IT WORKS:
-    - Looks at every file in the uploads folder
-    - Checks when it was last modified (os.path.getmtime)
-    - If older than 30 days, deletes the file AND removes
-      the filename from the database so the link disappears
-      from the admin panel too
-    
-    WHEN DOES THIS RUN?
-    - Every time the app starts (when Flask starts)
-    - You can also call it manually from the admin panel
-    """
-    if not os.path.exists(UPLOAD_FOLDER):
-        return
 
-    import time
-    now = time.time()
-    days_30 = 30 * 24 * 60 * 60  # 30 days in seconds
-    deleted_count = 0
 
-    for filename in os.listdir(UPLOAD_FOLDER):
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
-
-        # Check how old the file is
-        file_age = now - os.path.getmtime(filepath)
-
-        if file_age > days_30:
-            # Delete the physical file
-            os.remove(filepath)
-
-            # Also clear it from the database
-            conn = get_db()
-            cursor = conn.cursor()
-            cursor.execute(
-                'UPDATE inquiries SET attachment_file = NULL WHERE attachment_file = ?',
-                (filename,)
-            )
-            conn.commit()
-            conn.close()
-
-            deleted_count += 1
-            print(f"Auto-deleted old file: {filename}")
-
-    if deleted_count > 0:
-        print(f"Auto-delete complete: {deleted_count} file(s) removed")
+init_db()
 
 if __name__ == '__main__':
-    init_db()
     print("\nASAD Website running!")
     print("  Website  ->  http://127.0.0.1:5000")
     print("  Admin    ->  http://127.0.0.1:5000/admin/login\n")
     app.run(debug=True, port=5000)
+    
