@@ -337,8 +337,12 @@
         <div class="form-group"><label>Project Details</label><textarea id="f-message" rows="5" placeholder="Tell us about your project — location, size, timeline, specific requirements…"></textarea></div>
 
 <div class="form-group">
-  <label>Attach a File (PDF, DWG, JPG — optional)</label>
+  <label>Attach a File (PDF, DWG, JPG — optional, max 25MB)</label>
   <input type="file" id="f-file" accept=".pdf,.dwg,.jpg,.jpeg,.png" style="color:var(--light);cursor:pointer;">
+  <span style="font-size:11px;color:var(--slate);margin-top:4px;">
+    For files larger than 25MB, please use the link field below.
+    Uploaded files are kept for 30 days.
+  </span>
 </div>
 
 <div class="form-group">
